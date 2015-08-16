@@ -46,6 +46,7 @@ add_action('init', 'linkpro_init');
 /* functions */
 require_once linkpro_path . "functions/api.php";
 require_once linkpro_path . "functions/defaults.php";
+require_once linkpro_path . "functions/hooks-actions.php";
 require_once linkpro_path . "functions/user-functions.php";
 require_once linkpro_path . "functions/shortcode-functions.php";
 require_once linkpro_path . "functions/shortcode-main.php";
@@ -55,9 +56,6 @@ require_once linkpro_path . "functions/facebook.php";
 	if (is_admin()){
 		foreach (glob(linkpro_path . 'admin/*.php') as $filename) { include $filename; }
 	}
-
-/* load addons */
-	require_once linkpro_path . 'addons/multiforms/index.php';
 
 
 

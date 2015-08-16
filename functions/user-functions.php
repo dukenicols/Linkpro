@@ -79,5 +79,5 @@ function do_user_need_change_pass($user_id) {
 		/* end display name */
 		
 		do_action('linkpro_after_profile_updated_fb');
-		
+		return true;
 	}

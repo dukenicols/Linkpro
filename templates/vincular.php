@@ -1,7 +1,7 @@
 <!-- //ND Julio-2015 -->
 <div class="linkpro linkpro-<?php echo $i; ?> linkpro-<?php echo $layout; ?>" <?php linkpro_args_to_data( $args ); ?>>
 
-    <a href="#" class="linkpro-close-popup"><?php _e('Close','linkpro'); ?></a>
+    
     
     <div class="linkpro-head">
         
