@@ -1,11 +1,13 @@
 <?php
 
 function get_facebook_app_id(){
-    return '1479248155693493';
+    return linkpro_get_option('facebook_app_id');
+   
 }
 
 function get_facebook_app_secret(){
-    return '64ed76aff811c4413e4c5aaf03b1ab78';
+    return linkpro_get_option('facebook_app_secret');
+    
 }
 
 function connect_fb_php(){
@@ -31,14 +33,14 @@ function return_fb_user($return = 0){
             
         }
     } catch (Exception $e){
-        mail('nicolas.duqe@dodable.com', 'new exepction', $e->getMessage());
+        mail('nicolas.duque@dodable.com', 'new exepction', $e->getMessage());
     }
     return false;
 }
 
 
 function vincular_facebook($user_id) {
-    global $userpro;
+    global $linkpro;
     
      $facebook = connect_fb_php();
      
@@ -61,7 +63,7 @@ function vincular_facebook($user_id) {
         
        
             //Actualizamos la data con la data que recogemos de facebook
-               if( userpro_update_profile_via_facebook($user_id, $user_graph) ) {
+               if( linkpro_update_profile_via_facebook($user_id, $user_graph) ) {
                    return true;
                }
                 
@@ -90,7 +92,7 @@ function get_usuarios_vinculados_facebook(){
     global $wpdb;
    
    
-    $resultados = $wpdb->get_results("SELECT meta_value as facebook_id FROM wp_usermeta WHERE meta_key = 'userpro_facebook_id'", 'OBJECT');
+    $resultados = $wpdb->get_results("SELECT meta_value as facebook_id FROM wp_usermeta WHERE meta_key = 'linkpro_facebook_id'", 'OBJECT');
     return $resultados;
 }
 
