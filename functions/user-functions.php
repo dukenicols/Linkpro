@@ -44,6 +44,7 @@ function do_user_need_change_pass($user_id) {
 		$link = (isset($array['link'])) ? $array['link'] : 0;
 		$email = (isset($array['email'])) ? $array['email'] : 0;
 		$username = (isset($array['username'])) ? $array['username'] : 0;
+		$profile_pic = (isset($array['profile_pic'])) ? $array['profile_pic'] : 0;
 		
 		if ( linkpro_is_logged_in() && ( $user_id != get_current_user_id() ) && !current_user_can('manage_options') )
 			die();
@@ -53,6 +54,16 @@ function do_user_need_change_pass($user_id) {
 		if ($first_name && $first_name != 'undefined'){ update_user_meta($user_id, 'first_name', $first_name); }
 		if ($last_name && $last_name != 'undefined') { update_user_meta($user_id, 'last_name', $last_name); }
 		
+		// Issue #3
+		if ($email) {
+			wp_update_user( array('ID' => $user_id, 'user_email' => $email ) );
+			update_user_meta($user_id, 'user_email', $email );
+		}
+
+		if ($profile_pic) {
+			update_user_meta($user_id, 'profilepicture', $profile_pic);
+		}
+
 		if ($gender && $gender != 'undefined') { update_user_meta($user_id, 'gender', $gender); }
 		
 		if ($link && $link != 'undefined') { update_user_meta($user_id, 'facebook', $link); }
