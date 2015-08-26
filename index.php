@@ -3,7 +3,7 @@
 Plugin Name: LinkPro
 Plugin URI: http://dodable.com/linkpro
 Description: Permite a tus usuarios de wordpress vincular su cuenta de facebook, enviar notificaciones de nuevos posts.
-Version: 1.1
+Version: 1.1.1
 Author: Nicolas Duke
 Author URI: http://dodable.com
 License: MIT
