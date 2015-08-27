@@ -22,3 +22,10 @@ $string .= '</script>';
 
 echo $string;
 }
+
+function linkpro_get_url_parameter( $param ) {
+	if ( isset($_GET[$param]) ) {
+			return (int) $_GET[$param];
+	} 
+	return false;
+}
