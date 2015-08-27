@@ -85,6 +85,32 @@ switch( $template ):
 case 'vincular':
 
 $user_id = get_current_user_id();
+
+$demo = linkpro_get_url_parameter( 'demo' );
+
+
+if( $demo ) {
+  switch ( $demo ) {
+    case 1:
+    
+     $facebook = connect_fb_php();
+    $loginUrl = $facebook->getLoginUrl(array(  'redirect_uri' => site_url() . '/vincular/',
+                                               'scope' => 'email',
+                                               'display' => 'page'
+                                                      )); 
+
+
+      $template = 'vincular';
+      $args['template'] = 'vincular';
+
+      include linkpro_path . "templates/vincular.php";
+      exit;
+    break;
+
+    
+  }
+}
+
  
       
 if(linkpro_is_logged_in()){ // El usuario esta logueado
