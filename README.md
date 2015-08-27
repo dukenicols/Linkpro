@@ -13,4 +13,6 @@ Permite a tus usuarios de Wordpress vincular su cuenta con su cuenta de Facebook
 ##Shortcodes
 * Vincular: crea el proceso de vinculación con Facebook 
 > [linkpro template=vincular]
+
+> Si le pasamos ?demo=1 a la url donde se llama al plugin, pondremos el vinculador fuera del proceso de vinculación para testing
  
