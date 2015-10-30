@@ -81,97 +81,69 @@ if(isset($argument['hide_content']) && $argument['hide_content'] && empty($_GET)
 
         
 
-switch( $template ):
-case 'vincular':
-
-$user_id = get_current_user_id();
-
-$demo = linkpro_get_url_parameter( 'demo' );
-
-
-if( $demo ) {
-  switch ( $demo ) {
-    case 1:
+    switch( $template ):
     
-     $facebook = connect_fb_php();
-    $loginUrl = $facebook->getLoginUrl(array(  'redirect_uri' => site_url() . '/vincular/',
-                                               'scope' => 'email',
-                                               'display' => 'page'
-                                                      )); 
-
-
-      $template = 'vincular';
-      $args['template'] = 'vincular';
-
-      include linkpro_path . "templates/vincular.php";
-      exit;
-    break;
-
-    
-  }
-}
-
- 
-      
-if(linkpro_is_logged_in()){ // El usuario esta logueado
-
-    if(!linkpro_has_facebook_id($user_id)){ //no tiene facebook_id
-    
-         if(!return_fb_user()) { // si el usuario no esta logueado a facebook abrir la plantilla 
-                                                                          
-             
-             $facebook = connect_fb_php();
-             $loginUrl = $facebook->getLoginUrl(array(  'redirect_uri' => site_url() . '/vincular/',
-                                                        'scope' => 'email',
-                                                        'display' => 'page'
-                                                      )); 
-
-            $template = 'vincular';$args['template'] = 'vincular';
-                  
-                
-                
-                include linkpro_path . "templates/vincular.php";
-                exit;
-                 
-         } else {
-             
-             if(vincular_facebook($user_id)) {
-               //Verificar que el usuario tenga linkpro_need_change_pass en wp_usermeta
-                //si no lo tiene crearlo y setearlo a 1
-                if(do_user_need_change_pass($user_id)){
-                   // si es igual a 1 ... redireccionar a cambiar-pass           
-                   linkpro_redirect( site_url() .'/cambiar-pass/' ); 
-                   exit;  
-                } 
-                linkpro_redirect( site_url() );
-                exit;
-             }
-             
-             exit;
-             
-             
-         }
-    } else { // El usuario tiene facebook id     
-        //Verificar que el usuario tenga linkpro_need_change_pass en wp_usermeta
-        //si no lo tiene crearlo y setearlo a 1
-        if(do_user_need_change_pass($user_id)){
-           // si es igual a 1 ... redireccionar a cambiar-pass           
-           linkpro_redirect( site_url() .'/cambiar-pass/' ); 
-           exit;  
-        } 
-        linkpro_redirect( site_url() );
-        exit;
+      case 'vincular':
         
+        $demo = linkpro_get_url_parameter( 'demo' );
+
+      if(linkpro_is_logged_in() || $demo){ // El usuario esta logueado
+
+          $user_id = get_current_user_id();
+
+          if(!linkpro_has_facebook_id($user_id) || $demo){ //no tiene facebook_id
+          
+               if(!return_fb_user() || $demo) { // si el usuario no esta logueado a facebook abrir la plantilla 
+                                                                                
+                   
+                   $facebook = connect_fb_php();
+                   $loginUrl = $facebook->getLoginUrl(array(  'redirect_uri' => site_url() . '/vincular/',
+                                                              'scope' => 'email',
+                                                              'display' => 'page'
+                                                            )); 
+
+                  $template = 'vincular';$args['template'] = 'vincular';
+                        
+                      
+                      
+                      include linkpro_path . "templates/vincular.php";
+                       
+               } else {
+                   
+                   if(vincular_facebook($user_id)) {
+                     //Verificar que el usuario tenga linkpro_need_change_pass en wp_usermeta
+                      //si no lo tiene crearlo y setearlo a 1
+                      if(do_user_need_change_pass($user_id)){
+                         // si es igual a 1 ... redireccionar a cambiar-pass           
+                         linkpro_redirect( site_url() .'/cambiar-pass/' ); 
+                         exit;  
+                      } 
+                      linkpro_redirect( site_url() );
+                      exit;
+                   }
+                                   
+               }
+          } else { // El usuario tiene facebook id     
+              //Verificar que el usuario tenga linkpro_need_change_pass en wp_usermeta
+              //si no lo tiene crearlo y setearlo a 1
+              if(do_user_need_change_pass($user_id)){
+                 // si es igual a 1 ... redireccionar a cambiar-pass           
+                 linkpro_redirect( site_url() .'/cambiar-pass/' ); 
+                 exit;  
+              } 
+              linkpro_redirect( site_url() );
+              exit;
+              
+              
+          }
+    } else { // El usuario no esta logueado
+           
+       //Redireccionamos al login screen
+       linkpro_redirect(site_url());
         
+       exit; 
     }
-} else { // El usuario no esta logueado
-       
-   //Redireccionamos al login screen
-   linkpro_redirect(site_url());
-    
-   exit; 
-}
-break;
+    break;
 case 'fb_autologin':
        
        if(empty($_POST['signed_request']) === false) {
